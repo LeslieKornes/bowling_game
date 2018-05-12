@@ -16,11 +16,15 @@ class BowlingGame
     while frame < 10
       if spare?
         score += 10 + bonus_for_spare
+        @first_in_frame += 2
+      elsif strike?
+        score += 10 + bonus_for_strike
+        @first_in_frame += 1
       else
         score += standard_frame_score
+        @first_in_frame += 2
       end
         frame += 1
-        @first_in_frame += 2
       end
       score
     end
@@ -36,6 +40,14 @@ class BowlingGame
 
     def standard_frame_score
       @rolls[first_in_frame] + @rolls[first_in_frame + 1]
+    end
+
+    def strike?
+      @rolls[first_in_frame] == 10
+    end
+
+    def bonus_for_strike
+      @rolls[first_in_frame + 1] + @rolls[first_in_frame + 2]
     end
 
 end
